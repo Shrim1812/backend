@@ -1,7 +1,0 @@
-.equal-width th,
-.equal-width td {
-  width: 150px;           /* Column width same hogi */
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap;    /* Text wrap nahi karega */
-}
