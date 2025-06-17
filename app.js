@@ -10,7 +10,9 @@ import otpRouter from './Router/MemberForm.js';
 import { sql, poolPromise } from './db.js';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://frontend-ddwsq6ruc-shrim1812s-projects.vercel.app',
+}));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extends: true }));
 app.use("/otpRouter", otpRouter);
