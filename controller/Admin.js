@@ -77,7 +77,7 @@ export const createUser = async (req, res) => {
             .input("Password", sql.NVarChar, hashedPassword)
             .input("Role", sql.NVarChar, role)
             .query(`
-                INSERT INTO Users1 (Name, Email, Password, Role) 
+                INSERT INTO Users (Name, Email, Password, Role) 
                 VALUES (@Name, @Email, @Password, @Role)
             `);
 
@@ -97,7 +97,7 @@ export const getRoleByEmail = async (req, res) => {
         const pool = await poolPromise;
         const result = await pool.request()
             .input("Email", sql.NVarChar, Email) // use correct casing
-            .query("SELECT Role FROM Users1 WHERE Email = @Email"); // ✅ correct column name
+            .query("SELECT Role FROM Users WHERE Email = @Email"); // ✅ correct column name
 
         if (result.recordset.length > 0) {
             const role = result.recordset[0].Role;
@@ -121,11 +121,11 @@ export const getAllUsers = async (req, res) => {
                 Email, 
                 Role, 
                 Status AS [Status]  -- enforce case
-            FROM Users1
+            FROM Users
         `);
         res.json(result.recordset);
     } catch (err) {
-        console.error("Error fetching Users1:", err);
+        console.error("Error fetching Users:", err);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
@@ -143,7 +143,7 @@ export const updateUserByAdmin = async (req, res) => {
             .input("Role", sql.NVarChar(50), role)
             .input("Status", sql.NVarChar(10), status)
             .query(`
-                UPDATE Users1
+                UPDATE Users
                 SET Name = @Name,
                     Email = @Email,
                     Role = @Role,
@@ -190,7 +190,7 @@ export const changePassword = async (req, res) => {
         await pool.request()
             .input("Email", sql.NVarChar, email)
             .input("Password", sql.NVarChar, hashedPassword)
-            .query("UPDATE Users1 SET Password = @Password WHERE Email = @Email");
+            .query("UPDATE Users SET Password = @Password WHERE Email = @Email");
 
         return res.json({ success: true, message: "Password updated successfully" });
 
