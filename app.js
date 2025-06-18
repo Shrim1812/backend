@@ -1,5 +1,5 @@
 import express from 'express';
-const app = express(); 
+
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import Member from './Router/MemberForm.js';
@@ -9,7 +9,7 @@ import puppeteer from 'puppeteer';
 // import otpRouter from './Router/MemberForm.js'; 
 import { sql, poolPromise } from './db.js';
 
-
+const app = express(); 
 const allowedOrigins = [
   'https://frontend-mu-puce-29.vercel.app',
   'https://frontend-nokjn5guk-shrim1812s-projects.vercel.app', // ✅ your current frontend
