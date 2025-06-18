@@ -162,8 +162,8 @@ export const updateUserByAdmin = async (req, res) => {
 export const changePassword = async (req, res) => {
     const { email, newPassword } = req.body;
 
-    const passwordRegex = /^(?=.[A-Z])(?=.\d)(?=.[!@#$%^&()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
-
+    // 🔒 Password validation
+    const passwordRegex = /^(?=.[A-Z])(?=.\d)(?=.[@$!%?&]).{6,}$/;
     // Validate new password format
     if (!passwordRegex.test(newPassword)) {
         return res.status(400).json({
@@ -178,10 +178,10 @@ export const changePassword = async (req, res) => {
         // Check if user exists
         const userCheck = await pool.request()
             .input("Email", sql.NVarChar, email)
-            .query("SELECT * FROM Users1 WHERE Email = @Email");
+            .query("SELECT * FROM Users WHERE Email = @Email");
 
         if (userCheck.recordset.length === 0) {
-            return res.status(404).json({ success: false, message: "User not found" });
+            return res.Status(404).json({ success: false, message: "User not found" });
         }
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);
