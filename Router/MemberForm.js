@@ -29,7 +29,7 @@ router.get("/getReceipts", getReceipts);
 
 router.get("/receipt-pdf", ReceipPDF);
 router.get("/DuePayment", getSummaryByCompanyYear);
-router.get('/getMemberAndPaymentSummaryById/:id/:year', getMemberAndPaymentById);
+router.get('/getMemberAndPaymentSummaryById/:id/:year', getMemberAndPaymentSummaryById);
 router.post('/addYear', addYear);
 router.get('/getYear', getYear);
 router.post('/ExtraDetail', ExtraDetail);
