@@ -8,41 +8,32 @@ import path from 'path';
 import puppeteer from 'puppeteer';
 // import otpRouter from './Router/MemberForm.js'; 
 import { sql, poolPromise } from './db.js';
-const app = express();
+
+
 const allowedOrigins = [
   'https://frontend-ddwsq6ruc-shrim1812s-projects.vercel.app',
   'https://frontend-mu-puce-29.vercel.app',
-  'https://frontend-yourproject.vercel.app' // ← Add your actual deployed frontend here
+  'https://frontend-nokjn5guk-shrim1812s-projects.vercel.app', // ✅ your current frontend
 ];
 
-// app.use(cors({
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS: ' + origin));
-//     }
-//   },
-//   credentials: true
-// }));
-
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
-    console.log('🛰️ Incoming Origin:', origin);  // 👈 Debug this
+    console.log('🌐 Origin:', origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.error('❌ CORS Blocked for:', origin);
-      callback(new Error('Not allowed by CORS: ' + origin));
+      console.error('❌ CORS blocked for:', origin);
+      callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
   methods: "GET,POST,PUT,DELETE,OPTIONS",
-  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization"
-}));
+  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
+};
 
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // ✅ handles preflight requests
 
-app.use(express.json());
 app.use(bodyParser.urlencoded({ extends: true }));
 // app.use("/otpRouter", otpRouter);
 
