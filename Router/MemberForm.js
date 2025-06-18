@@ -1,7 +1,7 @@
-
+//getMemberAndPaymentSummaryById
 import express from 'express';
 import { createNewMember, getAllMembers, updateMember } from '../controller/NewMemberForm.js';
-import { getCompany, getMemberById, addPayment, getReceipts, getRegistrationFee, getSummaryByCompanyYear, ExtraDetail, getMemberAndPaymentSummaryById, getAllOtherPayments,getMemberAndPaymentById, addYear, getYear, getYearlySummary } from '../controller/PaymentSummary.js';
+import { getCompany, getMemberById, addPayment, getReceipts, getRegistrationFee, getSummaryByCompanyYear, ExtraDetail, getAllOtherPayments,getMemberAndPaymentById, addYear, getYear, getYearlySummary } from '../controller/PaymentSummary.js';
 
 import { ReceipPDF } from '../controller/receipt.js'
 import { getAnnualPayments, insertAnnualPayments, addNewYearAndInsertForAllMember, getYearRange, updateAnnualPayment, ReceiptOfPayment, getReceiptOfPayment, YearlyPaymentList } from '../controller/AnnualTable.js';
