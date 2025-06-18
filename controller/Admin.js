@@ -57,7 +57,8 @@ export const createUser = async (req, res) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // 🔒 Password validation
-    const passwordRegex = /^(?=.[A-Z])(?=.\d)(?=.[!@#$%^&()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
+
 
     if (!emailRegex.test(email)) {
         return res.status(400).json({ success: false, message: "Invalid email format" });
