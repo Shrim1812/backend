@@ -64,6 +64,7 @@ router.get("/getRoleByEmail", getRoleByEmail);
 router.get("/getAllUsers", getAllUsers);
 router.post("/updateUserByAdmin", updateUserByAdmin);
 router.post("/changePassword", changePassword);
+router.get('/getMemberAndPaymentById/:id/:year', getMemberAndPaymentById);
 
 
 
