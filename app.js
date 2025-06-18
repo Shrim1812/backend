@@ -6,7 +6,7 @@ import Member from './Router/MemberForm.js';
 import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
-import otpRouter from './Router/MemberForm.js'; 
+// import otpRouter from './Router/MemberForm.js'; 
 import { sql, poolPromise } from './db.js';
 const app = express();
 const allowedOrigins = [
