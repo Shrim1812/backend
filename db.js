@@ -4,20 +4,20 @@ import sql from 'mssql';
 const config = {
   user: "Indus",
   password: "Param@99811",
-  server: "DESKTOP-P5I83O4",
-  database: "okkk",
+  server: "157.20.215.187", // remote server IP
+  database: "IndusOkhla",
+  port: 1433,
   options: {
-    trustServerCertificate: true,
-    enableArithAbort: true,
-    instancename: "sqlExpress"
-  },
-  port: 1433
+    trustServerCertificate: true, // for self-signed certificates
+    encrypt: false, // set to true if your server supports TLS/SSL
+    enableArithAbort: true
+  }
 };
 
 const poolPromise = new sql.ConnectionPool(config)
   .connect()
   .then(pool => {
-    console.log("✅ Connected to MSSQL Database");
+    console.log("✅ Connected to Remote MSSQL Database");
     return pool;
   })
   .catch(err => {
