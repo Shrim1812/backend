@@ -2,6 +2,7 @@ import { poolPromise, sql } from '../db.js';
 import bcrypt from 'bcryptjs'; // 🔐 import bcrypt
 export const loginUser = async (req, res) => {
     const { email, password } = req.body;
+    console.log(req.body);
 
     try {
         const pool = await poolPromise;
