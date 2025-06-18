@@ -11,7 +11,6 @@ import { sql, poolPromise } from './db.js';
 
 
 const allowedOrigins = [
-  'https://frontend-ddwsq6ruc-shrim1812s-projects.vercel.app',
   'https://frontend-mu-puce-29.vercel.app',
   'https://frontend-nokjn5guk-shrim1812s-projects.vercel.app', // ✅ your current frontend
 ];
