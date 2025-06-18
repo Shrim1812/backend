@@ -15,16 +15,31 @@ const allowedOrigins = [
   'https://frontend-yourproject.vercel.app' // ← Add your actual deployed frontend here
 ];
 
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS: ' + origin));
+//     }
+//   },
+//   credentials: true
+// }));
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS: ' + origin));
+      console.error('❌ CORS blocked:', origin);
+      callback(new Error('CORS blocked for: ' + origin));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: "GET,POST,PUT,DELETE,OPTIONS",
+  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization"
 }));
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extends: true }));
 // app.use("/otpRouter", otpRouter);
