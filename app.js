@@ -28,17 +28,19 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
+    console.log('🛰️ Incoming Origin:', origin);  // 👈 Debug this
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.error('❌ CORS blocked:', origin);
-      callback(new Error('CORS blocked for: ' + origin));
+      console.error('❌ CORS Blocked for:', origin);
+      callback(new Error('Not allowed by CORS: ' + origin));
     }
   },
   credentials: true,
   methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization"
 }));
+
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extends: true }));
@@ -49,40 +51,6 @@ app.use((req, res, next) => {
     console.log(`Incoming request: ${req.method} ${req.originalUrl}`);
     next();
 });
-
-// async function getReceiptData(receiptNo) {
-//   const pool = await poolPromise;
-
-//   const query = `
-//     SELECT 
-//       yps.ReceiptNumber,
-//       CONVERT(varchar, yps.ReceiptDate, 23) AS ReceiptDate,
-//       m.CompanyName,
-//       yps.AmountPaid AS ReceivedAmount,
-//       yps.PaymentType,
-//       yps.PaymentYear,
-//       m.MemberName,
-//       op.Remark, -- Join from OtherPayments
-//       CASE 
-//         WHEN yps.PaymentType = 'Cheque' THEN CONCAT('Cheque - ', yps.ChequeNumber)
-//         ELSE yps.PaymentType
-//       END AS DisplayPaymentType
-//     FROM YearlyPaymentSummary yps
-//     JOIN Members m ON yps.MembershipID = m.MembershipID
-//     LEFT JOIN OtherPayments op ON yps.ReceiptNumber = op.ReceiptNumber -- Add LEFT JOIN
-//     WHERE yps.ReceiptNumber = @ReceiptNo
-//   `;
-
-//   const result = await pool
-//     .request()
-//     .input('ReceiptNo', sql.VarChar, receiptNo)
-//     .query(query);
-
-//   return result.recordset.length > 0 ? result.recordset[0] : null;
-// }
-
-
-
 
 async function getReceiptData(receiptNo) {
   const pool = await poolPromise;
@@ -148,62 +116,6 @@ async function getReceiptData(receiptNo) {
 
   return otherResult.recordset.length > 0 ? otherResult.recordset[0] : null;
 }
-
-
-
-
-// app.get('/Ohkla/report/receipt', async (req, res) => {
-//   const receiptNo = req.query.receiptNo;
-//   if (!receiptNo) {
-//     return res.status(400).send('receiptNo param is required');
-//   }
-
-//   try {
-//     const data = await getReceiptData(receiptNo);
-//     if (!data) return res.status(404).send('Receipt not found');
-
-//     // Logic to decide dynamic fields
-//     const paymentType = (data.PaymentType || '').toLowerCase();
-//     const isOtherOrReg = paymentType === 'registration' || paymentType === 'other';
-
-//     const paymentYearHtml = !isOtherOrReg && data.PaymentYear
-//       ? `<p><strong>For Year:</strong> ${data.PaymentYear}</p>` : '';
-
-//     const remarkHtml = isOtherOrReg && data.Remark
-//       ? `<p><strong>Remark:</strong> ${data.Remark}</p>` : '';
-         
-//     // Inject static and dynamic values
-//     let html = fs.readFileSync(path.join('templatest/receiptTemplate.html'), 'utf8');
-//     html = html
-//       .replace('{{ReceiptNumber}}', data.ReceiptNumber || '')
-//       .replace('{{CompanyName}}', data.CompanyName || '')
-//       .replace('{{MemberName}}', data.MemberName || '')
-//       .replace('{{ReceiptDate}}', data.ReceiptDate || '')
-//       .replace('{{ReceivedAmount}}', data.ReceivedAmount || '')
-//       .replace('{{PaymentType}}', data.PaymentType || '')
-//       .replace('{{PaymentYearSection}}', paymentYearHtml)
-//       .replace('{{RemarkSection}}', remarkHtml);
-
-//     const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
-//     const page = await browser.newPage();
-//     await page.setContent(html, { waitUntil: 'networkidle0' });
-//     const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
-//     await browser.close();
-
-//     res.set({
-//       'Content-Type': 'application/pdf',
-//       'Content-Disposition': `inline; filename=Receipt_${receiptNo}.pdf`,
-//     });
-//     res.send(pdfBuffer);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Server Error while generating receipt');
-//   }
-// });
-
-// app.listen(5000, () => {
-//   console.log("🚀 Server started on http://localhost:5000");
-// });
 
 app.get('/Ohkla/report/receipt', async (req, res) => {
   const receiptNo = req.query.receiptNo;
@@ -280,6 +192,11 @@ const chequeReceiveOnHtml = isCheque && data.ChequeReceiveOn
   }
 });
 
-app.listen(5000, () => {
-  console.log("🚀 Server started on http://localhost:5000");
+// app.listen(5000, () => {
+//   console.log("🚀 Server started on http://localhost:5000");
+// });
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server started on port ${PORT}`);
 });
+
