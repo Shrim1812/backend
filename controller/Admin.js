@@ -7,7 +7,7 @@ export const loginUser = async (req, res) => {
         const pool = await poolPromise;
         const result = await pool.request()
             .input("Email", sql.NVarChar, email)
-            .query("SELECT * FROM Users1 WHERE Email = @Email");
+            .query("SELECT * FROM Users WHERE Email = @Email");
 
         if (result.recordset.length > 0) {
             const user = result.recordset[0];
