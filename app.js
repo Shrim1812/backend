@@ -14,20 +14,17 @@ const allowedOrigins = [
   'https://frontend-mu-puce-29.vercel.app',
   'https://frontend-nokjn5guk-shrim1812s-projects.vercel.app', // ✅ your current frontend
 ];
-
-const corsOptions = {
+app.use(cors({Add commentMore actions
   origin: function (origin, callback) {
-    console.log('🌐 Origin:', origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.error('❌ CORS blocked for:', origin);
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error('Not allowed by CORS: ' + origin));
+      console.error('❌ CORS blocked:', origin);
+      callback(new Error('CORS blocked for: ' + origin));
     }
   },
-  credentials: true,
-  methods: "GET,POST,PUT,DELETE,OPTIONS",
-  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
+  credentials: true
 };
 
 app.use(cors(corsOptions));
