@@ -1,7 +1,7 @@
-//getMemberAndPaymentSummaryById
+
 import express from 'express';
 import { createNewMember, getAllMembers, updateMember } from '../controller/NewMemberForm.js';
-import { getCompany, getMemberById, addPayment, getReceipts, getRegistrationFee, getSummaryByCompanyYear, ExtraDetail, getAllOtherPayments,getMemberAndPaymentById, addYear, getYear, getYearlySummary } from '../controller/PaymentSummary.js';
+import { getCompany, getMemberById, addPayment, getReceipts, getRegistrationFee, getSummaryByCompanyYear,getMemberAndPaymentSummaryById, ExtraDetail, getAllOtherPayments,getMemberAndPaymentById, addYear, getYear, getYearlySummary } from '../controller/PaymentSummary.js';
 
 import { ReceipPDF } from '../controller/receipt.js'
 import { getAnnualPayments, insertAnnualPayments, addNewYearAndInsertForAllMember, getYearRange, updateAnnualPayment, ReceiptOfPayment, getReceiptOfPayment, YearlyPaymentList } from '../controller/AnnualTable.js';
@@ -29,7 +29,7 @@ router.get("/getReceipts", getReceipts);
 
 router.get("/receipt-pdf", ReceipPDF);
 router.get("/DuePayment", getSummaryByCompanyYear);
-// router.get('/getMemberAndPaymentSummaryById/:id/:year', getMemberAndPaymentSummaryById);
+router.get('/getMemberAndPaymentSummaryById/:id/:year', getMemberAndPaymentSummaryById);
 router.post('/addYear', addYear);
 router.get('/getYear', getYear);
 router.post('/ExtraDetail', ExtraDetail);
