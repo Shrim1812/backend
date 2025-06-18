@@ -11,7 +11,8 @@ import { sql, poolPromise } from './db.js';
 
 const app = express();
 app.use(cors({
-  origin: 'https://frontend-ddwsq6ruc-shrim1812s-projects.vercel.app',
+   origin: ['https://frontend-ddwsq6ruc-shrim1812s-projects.vercel.app'],
+  credentials: true
 }));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extends: true }));
