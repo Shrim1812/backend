@@ -13,8 +13,11 @@ export const loginUser = async (req, res) => {
             const user = result.recordset[0];
 
             // ✅ Ignore case while comparing Status
-           if ((user.status || "").toLowerCase() !== "active") {
+  if ((user.Status || "").trim().toLowerCase() !== "active")
+ {
+       console.log("DEBUG: User Status -->", user.status);
     return res.status(403).json({
+        
         success: false,
         message: "Your account is deactivated. Please contact admin."
     });
