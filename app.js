@@ -10,16 +10,17 @@ import puppeteer from 'puppeteer';
 import { sql, poolPromise } from './db.js';
 
 const app = express(); 
+
 const allowedOrigins = [
   'https://frontend-mu-puce-29.vercel.app',
-  'https://frontend-nokjn5guk-shrim1812s-projects.vercel.app', // ✅ your current frontend
+  'https://frontend-nokjn5guk-shrim1812s-projects.vercel.app',
 ];
-app.use(cors({Add commentMore actions
+
+const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS: ' + origin));
       console.error('❌ CORS blocked:', origin);
       callback(new Error('CORS blocked for: ' + origin));
     }
@@ -27,8 +28,9 @@ app.use(cors({Add commentMore actions
   credentials: true
 };
 
+// ✅ Correctly apply CORS
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // ✅ handles preflight requests
+app.options('*', cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extends: true }));
 // app.use("/otpRouter", otpRouter);
