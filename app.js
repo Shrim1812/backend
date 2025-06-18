@@ -9,9 +9,27 @@ import puppeteer from 'puppeteer';
 // import otpRouter from './Router/MemberForm.js'; 
 import { sql, poolPromise } from './db.js';
 const app = express();
+// const allowedOrigins = [
+//   'https://frontend-ddwsq6ruc-shrim1812s-projects.vercel.app',
+//   'https://frontend-mu-puce-29.vercel.app'
+// ];
+
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('CORS not allowed for this origin: ' + origin));
+//     }
+//   },
+//   credentials: true
+// }));
+
+
 const allowedOrigins = [
   'https://frontend-ddwsq6ruc-shrim1812s-projects.vercel.app',
-  'https://frontend-mu-puce-29.vercel.app'
+  'https://frontend-mu-puce-29.vercel.app',
+  'https://frontend-yourproject.vercel.app' // ← Add your actual deployed frontend here
 ];
 
 app.use(cors({
@@ -19,7 +37,7 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS not allowed for this origin: ' + origin));
+      callback(new Error('Not allowed by CORS: ' + origin));
     }
   },
   credentials: true
